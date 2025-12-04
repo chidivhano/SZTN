@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SZTN Trading & Projects | Security & Automation</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Config for Brand Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0f172a', // Slate 900
+                            green: '#4ade80', // Green 400
+                            accent: '#166534', // Green 800
+                            light: '#f8fafc',
+                            gray: '#334155'
+                        }
+                    },
+                    fontFamily: {
+                        tech: ['Orbitron', 'sans-serif'],
+                        body: ['Roboto', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        
+        h1, h2, h3, h4, .nav-link {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Glowing Text Effect */
+        .glow-text {
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+        }
+
+        /* Active Navigation State */
+        .active-nav {
+            color: #4ade80;
+            border-bottom: 2px solid #4ade80;
+        }
+
+        /* Card Hover Effects */
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(74, 222, 128, 0.1);
+            border-color: #4ade80;
+        }
+
+        /* Hide pages by default */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        /* Show active page */
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="bg-brand-dark/95 border-b border-brand-gray sticky top-0 z-50 backdrop-blur-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- Logo Area -->
+            <div class="flex items-center space-x-2" onclick="switchPage('home')">
+                <div class="w-10 h-10 border-2 border-brand-green rounded-full flex items-center justify-center cursor-pointer">
+                    <i class="fa-solid fa-shield-halved text-brand-green text-xl"></i>
+                </div>
+                <div class="cursor-pointer">
+                    <h1 class="text-2xl font-bold tracking-wider text-white">SZTN</h1>
+                    <p class="text-[10px] text-brand-green tracking-[0.2em] uppercase">Trading & Projects</p>
+                </div>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8">
+                <button onclick="switchPage('home')" id="nav-home" class="nav-link text-sm uppercase tracking-widest hover:text-brand-green transition-colors active-nav">Home</button>
+                <button onclick="switchPage('about')" id="nav-about" class="nav-link text-sm uppercase tracking-widest hover:text-brand-green transition-colors">About</button>
+                <button onclick="switchPage('services')" id="nav-services" class="nav-link text-sm uppercase tracking-widest hover:text-brand-green transition-colors">Services</button>
+                <button onclick="switchPage('stock')" id="nav-stock" class="nav-link text-sm uppercase tracking-widest hover:text-brand-green transition-colors">Stock Supply</button>
+                <button onclick="switchPage('contact')" id="nav-contact" class="nav-link text-sm uppercase tracking-widest hover:text-brand-green transition-colors">Contact</button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button onclick="toggleMobileMenu()" class="text-white focus:outline-none">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-gray p-4 absolute w-full border-b border-brand-green">
+            <button onclick="switchPage('home'); toggleMobileMenu()" class="block w-full text-left py-2 hover:text-brand-green">Home</button>
+            <button onclick="switchPage('about'); toggleMobileMenu()" class="block w-full text-left py-2 hover:text-brand-green">About</button>
+            <button onclick="switchPage('services'); toggleMobileMenu()" class="block w-full text-left py-2 hover:text-brand-green">Services</button>
+            <button onclick="switchPage('stock'); toggleMobileMenu()" class="block w-full text-left py-2 hover:text-brand-green">Stock Supply</button>
+            <button onclick="switchPage('contact'); toggleMobileMenu()" class="block w-full text-left py-2 hover:text-brand-green">Contact</button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow">
+
+        <!-- ==================== HOME PAGE ==================== -->
+        <section id="home" class="page-section active">
+            <!-- Hero Banner -->
+            <div class="relative h-[80vh] flex items-center justify-center overflow-hidden">
+                <!-- Background Image Overlay -->
+                <div class="absolute inset-0 z-0">
+                    <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=2070&auto=format&fit=crop" alt="Security Camera Background" class="w-full h-full object-cover opacity-30">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark to-transparent"></div>
+                </div>
+
+                <div class="container mx-auto px-4 z-10 text-center">
+                    <div class="inline-block px-4 py-1 border border-brand-green rounded-full text-brand-green text-xs font-bold tracking-widest uppercase mb-4 animate-pulse">
+                        <i class="fa-solid fa-circle text-[8px] mr-2"></i> Systems Online
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 glow-text">Secure Your World</h1>
+                    <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-10">
+                        Premium CCTV, Gate Automation, and Solar Solutions. We supply the stock and provide expert installation.
+                    </p>
+                    <div class="flex flex-col md:flex-row justify-center gap-4">
+                        <button onclick="switchPage('services')" class="px-8 py-4 bg-brand-green text-brand-dark font-bold rounded hover:bg-white transition-colors uppercase tracking-wider font-tech">
+                            View Services
+                        </button>
+                        <button onclick="switchPage('contact')" class="px-8 py-4 border border-brand-green text-brand-green font-bold rounded hover:bg-brand-green hover:text-brand-dark transition-colors uppercase tracking-wider font-tech">
+                            Get a Quote
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Features -->
+            <div class="container mx-auto px-4 py-16">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-brand-gray/50 p-6 rounded-lg border border-gray-700 text-center">
+                        <i class="fa-solid fa-video text-4xl text-brand-green mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">24/7 Surveillance</h3>
+                        <p class="text-gray-400">Off-site monitoring and remote viewing capabilities to keep eyes on your property.</p>
+                    </div>
+                    <div class="bg-brand-gray/50 p-6 rounded-lg border border-gray-700 text-center">
+                        <i class="fa-solid fa-bolt text-4xl text-brand-green mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">COC Certified</h3>
+                        <p class="text-gray-400">Fully compliant electric fencing installations with Certificate of Compliance issuance.</p>
+                    </div>
+                    <div class="bg-brand-gray/50 p-6 rounded-lg border border-gray-700 text-center">
+                        <i class="fa-solid fa-boxes-stacked text-4xl text-brand-green mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">We Supply Stock</h3>
+                        <p class="text-gray-400">Direct suppliers of Hikvision, Centurion and more. Buy from us and save.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ABOUT PAGE ==================== -->
+        <section id="about" class="page-section">
+            <div class="container mx-auto px-4 py-16">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-brand-green mb-4">Who We Are</h2>
+                    <div class="w-24 h-1 bg-white mx-auto"></div>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/2">
+                        <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a782?q=80&w=2070&auto=format&fit=crop" alt="Technician working" class="rounded-lg shadow-2xl border border-brand-gray">
+                    </div>
+                    <div class="md:w-1/2">
+                        <h3 class="text-2xl font-bold mb-4">Dedicated to Your Safety</h3>
+                        <p class="text-gray-300 mb-6 leading-relaxed">
+                            SZTN Trading & Projects is a dynamic security and automation solutions provider. We don't just install systems; we build comprehensive safety ecosystems for homes and businesses. 
+                        </p>
+                        <p class="text-gray-300 mb-6 leading-relaxed">
+                            Our unique value proposition lies in our ability to both <strong>supply and install</strong>. By cutting out the middleman, we ensure our clients get the best market rates on premium brands like Hikvision and Centurion.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fa-solid fa-check text-brand-green mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold">Our Mission</h4>
+                                    <p class="text-sm text-gray-400">To provide reliable, affordable, and state-of-the-art security solutions.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa-solid fa-check text-brand-green mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold">Our Vision</h4>
+                                    <p class="text-sm text-gray-400">To be the leading provider of integrated security and energy solutions in the region.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SERVICES PAGE ==================== -->
+        <section id="services" class="page-section">
+            <div class="container mx-auto px-4 py-16">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-brand-green mb-4">Our Services</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">Comprehensive security and automation solutions tailored to your specific needs.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="service-card bg-brand-gray p-8 rounded-xl border border-gray-700 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i class="fa-solid fa-eye text-9xl"></i>
+                        </div>
+                        <i class="fa-solid fa-video text-4xl text-brand-green mb-6"></i>
+                        <h3 class="text-2xl font-bold mb-3 font-tech">CCTV Surveillance</h3>
+                        <ul class="text-gray-400 space-y-2 text-sm">
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>HD & 4K Cameras</li>
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>Off-Site Monitoring</li>
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>Mobile App Integration</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="service-card bg-brand-gray p-8 rounded-xl border border-gray-700 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i class="fa-solid fa-bolt text-9xl"></i>
+                        </div>
+                        <i class="fa-solid fa-plug-circle-bolt text-4xl text-brand-green mb-6"></i>
+                        <h3 class="text-2xl font-bold mb-3 font-tech">Electric Fencing</h3>
+                        <ul class="text-gray-400 space-y-2 text-sm">
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>New Installations</li>
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>Certificate of Compliance (COC)</li>
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>Fence Repairs</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="service-card bg-brand-gray p-8 rounded-xl border border-gray-700 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i class="fa-solid fa-door-open text-9xl"></i>
+                        </div>
+                        <i class="fa-solid fa-dungeon text-4xl text-brand-green mb-6"></i>
+                        <h3 class="text-2xl font-bold mb-3 font-tech">Gate Automation</h3>
+                        <ul class="text-gray-400 space-y-2 text-sm">
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>Centurion Motors</li>
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>Sliding & Swing Gates</li>
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>Anti-Theft Cages</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 4 -->
+                    <div class="service-card bg-brand-gray p-8 rounded-xl border border-gray-700 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i class="fa-solid fa-sun text-9xl"></i>
+                        </div>
+                        <i class="fa-solid fa-solar-panel text-4xl text-brand-green mb-6"></i>
+                        <h3 class="text-2xl font-bold mb-3 font-tech">Solar Systems</h3>
+                        <ul class="text-gray-400 space-y-2 text-sm">
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>Inverter Installation</li>
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>Backup Power for Security</li>
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>Battery Banks</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 5 -->
+                    <div class="service-card bg-brand-gray p-8 rounded-xl border border-gray-700 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i class="fa-solid fa-phone text-9xl"></i>
+                        </div>
+                        <i class="fa-solid fa-walkie-talkie text-4xl text-brand-green mb-6"></i>
+                        <h3 class="text-2xl font-bold mb-3 font-tech">Intercom Systems</h3>
+                        <ul class="text-gray-400 space-y-2 text-sm">
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>Video Intercoms</li>
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>GSM Units</li>
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>Access Control Keypads</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 6 -->
+                    <div class="service-card bg-brand-gray p-8 rounded-xl border border-gray-700 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i class="fa-solid fa-screwdriver-wrench text-9xl"></i>
+                        </div>
+                        <i class="fa-solid fa-screwdriver text-4xl text-brand-green mb-6"></i>
+                        <h3 class="text-2xl font-bold mb-3 font-tech">Maintenance</h3>
+                        <ul class="text-gray-400 space-y-2 text-sm">
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>System Upgrades</li>
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>Fault Finding</li>
+                            <li><i class="fa-solid fa-angle-right text-brand-green mr-2"></i>Regular Servicing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== STOCK / PRODUCTS PAGE ==================== -->
+        <section id="stock" class="page-section">
+            <div class="container mx-auto px-4 py-16">
+                <div class="flex flex-col md:flex-row items-center justify-between mb-12">
+                    <div>
+                        <h2 class="text-4xl font-bold text-brand-green mb-2">We Supply Stock</h2>
+                        <p class="text-gray-400">Buy direct from us. We stock the leading brands.</p>
+                    </div>
+                    <button onclick="switchPage('contact')" class="mt-4 md:mt-0 px-6 py-2 border border-white rounded hover:bg-white hover:text-brand-dark transition-colors">
+                        Inquire About Stock
+                    </button>
+                </div>
+
+                <!-- Featured Brands Strip -->
+                <div class="bg-white p-8 rounded-lg mb-16 flex flex-wrap justify-center items-center gap-12">
+                   <!-- Styled text representations of logos for the demo -->
+                   <div class="text-3xl font-bold text-gray-800 italic tracking-tighter">HIKVISION</div>
+                   <div class="text-3xl font-bold text-green-700 flex items-center gap-1"><i class="fa-solid fa-copyright"></i> CENTURION</div>
+                   <div class="text-3xl font-bold text-blue-600">HiLook</div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="relative group overflow-hidden rounded-xl">
+                        <img src="https://images.unsplash.com/photo-1596767287957-c83400d41334?q=80&w=2070&auto=format&fit=crop" alt="Gate Motor" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-90"></div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h3 class="text-2xl font-bold mb-1">Gate Motors</h3>
+                            <p class="text-brand-green">Centurion D5, D10 & Vantage</p>
+                        </div>
+                    </div>
+                    
+                    <div class="relative group overflow-hidden rounded-xl">
+                        <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=2070&auto=format&fit=crop" alt="CCTV" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-90"></div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h3 class="text-2xl font-bold mb-1">Surveillance Kits</h3>
+                            <p class="text-brand-green">DVRs, NVRs & Cameras</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CONTACT PAGE ==================== -->
+        <section id="contact" class="page-section">
+            <div class="container mx-auto px-4 py-16">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-brand-green mb-4">Get In Touch</h2>
+                    <p class="text-gray-400">Ready to secure your property? Contact us for a quote.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+                    <!-- Contact Info -->
+                    <div class="space-y-8">
+                        <div class="flex items-center p-6 bg-brand-gray/50 rounded-xl border border-gray-700">
+                            <div class="w-12 h-12 bg-brand-green rounded-full flex items-center justify-center text-brand-dark text-xl mr-6">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-400 uppercase tracking-widest">Office</p>
+                                <p class="text-2xl font-bold font-tech">010 157 0815</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center p-6 bg-brand-gray/50 rounded-xl border border-gray-700">
+                            <div class="w-12 h-12 bg-brand-green rounded-full flex items-center justify-center text-brand-dark text-xl mr-6">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-400 uppercase tracking-widest">Mobile / WhatsApp</p>
+                                <p class="text-2xl font-bold font-tech">073 108 6861</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center p-6 bg-brand-gray/50 rounded-xl border border-gray-700">
+                            <div class="w-12 h-12 bg-brand-green rounded-full flex items-center justify-center text-brand-dark text-xl mr-6">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-400 uppercase tracking-widest">Email</p>
+                                <p class="text-xl font-bold">info@sztn.co.za</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <form class="bg-brand-gray p-8 rounded-xl border border-gray-700 shadow-lg" onsubmit="event.preventDefault(); alert('Thank you! This is a demo form.');">
+                        <div class="mb-4">
+                            <label class="block text-sm font-bold mb-2 text-brand-green">Name</label>
+                            <input type="text" class="w-full bg-brand-dark border border-gray-600 rounded p-3 text-white focus:border-brand-green focus:outline-none transition-colors" placeholder="Your Name">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-bold mb-2 text-brand-green">Phone Number</label>
+                            <input type="tel" class="w-full bg-brand-dark border border-gray-600 rounded p-3 text-white focus:border-brand-green focus:outline-none transition-colors" placeholder="073 123 4567">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-bold mb-2 text-brand-green">Service Required</label>
+                            <select class="w-full bg-brand-dark border border-gray-600 rounded p-3 text-white focus:border-brand-green focus:outline-none transition-colors">
+                                <option>CCTV Installation</option>
+                                <option>Electric Fencing</option>
+                                <option>Gate Motor Repair/Install</option>
+                                <option>Solar System</option>
+                                <option>Buy Stock</option>
+                            </select>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold mb-2 text-brand-green">Message</label>
+                            <textarea class="w-full bg-brand-dark border border-gray-600 rounded p-3 text-white focus:border-brand-green focus:outline-none transition-colors h-32" placeholder="How can we help you?"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-brand-green text-brand-dark font-bold py-4 rounded hover:bg-white transition-colors uppercase tracking-widest">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-8 border-t border-gray-800">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0 text-center md:text-left">
+                <h4 class="text-xl font-bold font-tech text-white">SZTN <span class="text-brand-green">TRADING</span></h4>
+                <p class="text-xs text-gray-500">Security & Projects</p>
+            </div>
+            <div class="text-center md:text-right">
+                <p class="text-gray-500 text-sm">&copy; 2025 SZTN Trading & Projects. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Navigation -->
+    <script>
+        function switchPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            const selectedPage = document.getElementById(pageId);
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+            }
+
+            // Update Nav Styling
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active-nav');
+            });
+
+            const activeBtn = document.getElementById('nav-' + pageId);
+            if (activeBtn) {
+                activeBtn.classList.add('active-nav');
+            }
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
